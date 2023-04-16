@@ -38,7 +38,17 @@ public class ListenerList {
 
     public void loadFromFile() {
         LOG.info("Loading from file " + FILE_NAME);
-        try (Reader reader = new FileReader(FILE_NAME)) {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            LOG.info("Listener list not found, creating a new one");
+            try (Writer writer = new FileWriter(FILE_NAME)) {
+                writer.write("");
+            } catch (IOException e) {
+                LOG.error("Couldn't create new listener list", e);
+            }
+        }
+
+        try (Reader reader = new FileReader(file)) {
             Map<String, String> watchList = gson.fromJson(reader, TYPE);
             if (watchList != null) {
                 this.listenerMap.putAll(watchList);

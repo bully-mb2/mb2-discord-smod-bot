@@ -29,7 +29,7 @@ public class LocalCommandRcon extends LocalCommand {
             return "You don't have the required role to command me!";
         }
 
-        String response = bot.getRconClient().printAll(readOption(event, "message");
+        String response = bot.getRconClient().printAll(readOption(event, "message"));
         if (response == null || response.isEmpty()) {
             return "Command sent but got no response from the server.";
         }
